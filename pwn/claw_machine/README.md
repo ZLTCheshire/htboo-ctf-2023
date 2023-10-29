@@ -144,7 +144,7 @@ Also did some testing "Off camera" and found out that you have 72 bytes before h
 
 ### Debugging 
 
-Ok, time to go hunt for some canaries
+Ok, time to go hunt for some canaries,
 In linux canaries end in 00. This makes them pretty easy to spot. to figure out which values correspond to a canary i used a quick python script:
 ```python
 from pwn import *
