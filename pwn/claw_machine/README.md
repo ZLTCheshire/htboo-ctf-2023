@@ -24,7 +24,7 @@ As we can see:
 | **PIE**    | ✅       | Randomizes the **base address** of the binary |
 | **RelRO**  | **Full** | Makes some binary sections **read-only** |
 
-Running `file`, we also notice the the binary is `64-bit` and `statically linked`.
+Running `file`, we also notice the the binary is `64-bit` and `dynamically linked`.
 
 ```console
 ➜  claw_machine: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter ./glibc/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=0dcdc3f9bead6c2a31478a42c3a9e13e478a230f, not stripped
@@ -33,25 +33,25 @@ Running `file`, we also notice the the binary is `64-bit` and `statically linked
 The interface of the program looks like this:
 
 ```console
-➜  challenge git:(main) ✗ ./pinata 
-██████████████████████████████████
-        █
-        █
-        █
-        █
-        █       ████
-        █      ██████
-        █      ██ ██
- ████████████████
-███████████████▬ 
-  █████████████
-  ██ ██  ██ ██
-  ██ ██  ██ ██
+➜  ./claw_machine
+▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▜
+▌▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▐
+▌▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▐
+█            |             █
+█            |             █
+█            |             █
+█         /▔▔ ▔▔\          █
+█        |       |         █
+█         \     /          █
+█                          █
+█                          █
+█        __________        █
+█        |flag.txt|        █
+████████████████████████████
 
-Scream as much as you can to break the pinata!!
+Press '1' to move left, '2' to move right, '9' to grab the prize!
 
->> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-[1]    4389 segmentation fault (core dumped)  ./pinata
+>>
 ```
 
 ### Disassembly ⛏️
