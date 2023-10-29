@@ -178,9 +178,9 @@ for i in range(300):
 after running this script a couple times i managed to not only find that a canary sits on the 21st value on the stack (%21$p) but also that we have the address of Main+53 at the 23rd value on the stack (%23$p)
 the address of main+53 is on the stack due to it being the return value after fd is done :)
 
-Since we know that the return value is sits 2 spots after the canary we know that our payload should look something like this:
+Since we know that the return value sits 2 spots after the canary on the stack we know that our payload should look something like this:
 
-Overflow
+(72 bytes) + (canary) + (8 bytes) + (read_flag)
 
 # Solution
 
