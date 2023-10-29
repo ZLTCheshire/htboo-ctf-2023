@@ -140,7 +140,7 @@ zsh: IOT instruction (core dumped)  ./claw_machine
 ```
 Shit. Canaries :)
 
-Also did some testing "Off camera" and found out that you have 72 bytes before hitting the canary :)
+Also did some testing and found out that you have 72 bytes before hitting the canary :)
 
 ### Debugging 
 
