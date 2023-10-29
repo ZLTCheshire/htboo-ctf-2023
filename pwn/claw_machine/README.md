@@ -176,7 +176,7 @@ for i in range(300):
 #  makes em really easy to see
 ```
 after running this script a couple times i managed to not only find that a canary sits on the 21st value on the stack (%21$p) but also that we have the address of Main+53 at the 23rd value on the stack (%23$p)
-the address of main+53 is on the stack due to it being the return value after fd is done :)
+the address of main+53 is on the stack due because its the return value :)
 
 Since we know that the return value sits 2 spots after the canary on the stack we know that our payload should look something like this:
 
