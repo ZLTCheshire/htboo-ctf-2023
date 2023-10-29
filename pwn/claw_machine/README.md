@@ -27,8 +27,7 @@ As we can see:
 Running `file`, we also notice the the binary is `64-bit` and `statically linked`.
 
 ```console
-➜  challenge git:(main) ✗ file pinata 
-pinata: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2dcf43face3a1fa76053b1589acf3b6e12d2eba4, for GNU/Linux 3.2.0, not stripped
+➜  claw_machine: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter ./glibc/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=0dcdc3f9bead6c2a31478a42c3a9e13e478a230f, not stripped
 ```
 
 The interface of the program looks like this:
