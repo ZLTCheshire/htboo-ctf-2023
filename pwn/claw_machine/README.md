@@ -89,7 +89,39 @@ Upon agreeing to rate the game you can insert your name and your feedback.
 
 ### Disassembly ⛏️
 
-The binary indicates that there is `canary`, but trying a big payload, we can see that this is not true.
+```C
+unsigned __int64 fb()
+{
+  __int16 buf; // [rsp+Dh] [rbp-73h] BYREF
+  char v2; // [rsp+Fh] [rbp-71h]
+  char format[8]; // [rsp+10h] [rbp-70h] BYREF
+  __int64 v4; // [rsp+18h] [rbp-68h]
+  char v5; // [rsp+20h] [rbp-60h]
+  __int64 v6[9]; // [rsp+30h] [rbp-50h] BYREF
+  unsigned __int64 v7; // [rsp+78h] [rbp-8h]
+
+  v7 = __readfsqword(0x28u);
+  buf = 0;
+  v2 = 0;
+  *(_QWORD *)format = 0LL;
+  v4 = 0LL;
+  v5 = 0;
+  memset(v6, 0, 64);
+  printf("Would you like to rate our game? (y/n)\n\n>> ");
+  read(0, &buf, 2uLL);
+  if ( (_BYTE)buf == 121 || (_BYTE)buf == 89 )
+  {
+    printf("\nEnter your name: ");
+    read(0, format, 0x10uLL);
+    printf("\nThank you for giving feedback ");
+    printf(format);
+    printf("\nLeave your feedback here: ");
+    read(0, v6, 0x5EuLL);
+  }
+  puts("\nThank you for playing!\n");
+  return __readfsqword(0x28u) ^ v7;
+}
+```
 
 ```gdb
 pwndbg> cyclic 200
