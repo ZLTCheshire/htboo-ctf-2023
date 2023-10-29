@@ -53,6 +53,39 @@ Press '1' to move left, '2' to move right, '9' to grab the prize!
 
 >>
 ```
+After attempting to grab the prize no matter how much you move you will break the box and be offered to rate the game:
+
+```console
+▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▜
+▌▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▐
+▌▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▐
+█            |             █
+█            |             █
+█            |             █
+█            |             █
+█            |             █
+█            |             █
+█         /▔▔ ▔▔\          █
+█        |       |         █
+█         \     /          █
+█        |flag.txt|        █
+████████████████████████████
+
+[-] You broke the box and couldn't get the prize!
+
+Would you like to rate our game? (y/n)
+
+>> y
+
+Enter your name: TESTNAME
+
+Thank you for giving feedback TESTNAME
+
+Leave your feedback here: FEEDTEST
+
+Thank you for playing!
+```
+Upon agreeing to rate the game you can insert your name and your feedback.
 
 ### Disassembly ⛏️
 
